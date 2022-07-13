@@ -12,15 +12,24 @@ class Cursos extends Model
     protected $table = "cursos";
 
     protected $fillable = [
+        'id_Profesor',
         'Nom_Curso',
         'Descripcion',
         'Img_Curso',
         'Color',
         
     ];
-    public $timestamps = false;
+    
 
     public function estudiantes() {
         return $this->hasMany(estudiantes::class);
     }
+    
+    public function profesor() {
+        return $this->belongsTo(profesor::class);
+    }
+
+    /*pertenece a un profesor*/
+    
 }
+

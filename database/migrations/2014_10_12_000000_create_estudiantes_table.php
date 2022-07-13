@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('estudiantes', function (Blueprint $table) {
             $table->id();
+            $table->string('Tipo');
             $table->string('Nom_Estudiante');
             $table->string('Nom_Usuario');
             $table->string('Dir_img');

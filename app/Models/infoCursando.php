@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class infoCursando extends Model
 {
     use HasFactory;
-    protected $table = "estudiantes";
+    protected $table = "info_cursando";
 
     protected $fillable = [
-        'id_estudiante',
-        'id_curso',
+        'id_Estudiante',
+        'id_Cursos',
         'puntuacion',
         
     ];
 
-public $timestamps = false;
+
 
 public function estudiante() {
     return $this->belongsTo(estudiantes::class);

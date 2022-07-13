@@ -21,6 +21,7 @@ class estudiantes extends Authenticatable
 protected $table = "estudiantes";
 
     protected $fillable = [
+        'Tipo',
         'Nom_Estudiante',
         'Nom_Usuario',
         'Dir_img',
@@ -28,7 +29,7 @@ protected $table = "estudiantes";
         'password',
     ];
 
-public $timestamps = false;
+
 
     /**
      * The attributes that should be hidden for serialization.

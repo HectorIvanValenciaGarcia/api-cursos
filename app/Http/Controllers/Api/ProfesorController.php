@@ -3,20 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\profesor;
 use Illuminate\Http\Request;
-use App\Models\estudiantes;
 use Illuminate\Support\Facades\Hash;
 
-
-
-class EstudianteController extends Controller
+class ProfesorController extends Controller
 {
     public function register(Request $resquest)
     {
         $resquest->validate(
             [
-                
-                'Nom_Estudiante' => 'required',
+                'Nom_Profesor' => 'required',
                 'Nom_Usuario' => 'required|unique:Estudiantes',
                 'Dir_img' => 'required',
                 'email' => 'required|email|unique:Estudiantes',
@@ -24,14 +21,14 @@ class EstudianteController extends Controller
 
             ]);
 
-                $estudiante = new estudiantes();
-                $estudiante->Tipo= 'Estudiante';
-                $estudiante->Nom_Estudiante = $resquest->Nom_Estudiante;
-                $estudiante->Nom_Usuario = $resquest->Nom_Usuario;
-                $estudiante->Dir_img = $resquest->Dir_img;
-                $estudiante->email = $resquest->email;
-                $estudiante->password = Hash::make($resquest->password);
-                $estudiante->save();
+                $profesor = new profesor();
+                $profesor->Tipo='Profesor';
+                $profesor->Nom_Profesor = $resquest->Nom_Profesor;
+                $profesor->Nom_Usuario = $resquest->Nom_Usuario;
+                $profesor->Dir_img = $resquest->Dir_img;
+                $profesor->email = $resquest->email;
+                $profesor->password = Hash::make($resquest->password);
+                $profesor->save();
 
                 return response()->json(
                     [
@@ -48,10 +45,10 @@ class EstudianteController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        $student = estudiantes::where("email", "=", $resquest->email)->first();
-        if (isset($student->id)) {
-            if (Hash::check($resquest->password, $student->password)) {
-                $token = $student->createToken("auth_token")->plainTextToken;
+        $profesor = profesor::where("email", "=", $resquest->email)->first();
+        if (isset($profesor->id)) {
+            if (Hash::check($resquest->password, $profesor->password)) {
+                $token = $profesor->createToken("auth_token")->plainTextToken;
                 return response()->json(
                     [
                         "status" => true,
