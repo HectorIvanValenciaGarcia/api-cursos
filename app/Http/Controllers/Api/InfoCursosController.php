@@ -57,8 +57,13 @@ class InfoCursosController extends Controller
     {
       
         try {
-            $registroCursos = infoCursando::where('id_Estudiante', auth()->user()->id)->get();
+            $registroCursos= infoCursando::join("estudiantes", "estudiantes.id", "=", "info_cursando.id_Estudiante")
+            ->select("*")
+            ->where("estudiantes.id", "=", auth()->user()->id)
+            ->get();
+            //$registroCursos = infoCursando::where('id_Estudiante', auth()->user()->id)->get();
             if ($registroCursos->isEmpty()) {
+
                 return response()->json(
                     [
                         "status" => false,
@@ -67,6 +72,8 @@ class InfoCursosController extends Controller
                     ]
                 );
             } else {
+                //consulta de union y lo retorno dentro retunr
+                
                 return response()->json(
                     [
                         "status" => true,
@@ -97,8 +104,17 @@ class InfoCursosController extends Controller
             ]
         );
         try {
-            $infoCurso = infoCursando::where('id_Cursos', $request->id_Cursos)->get();
-
+            
+             
+             $infoCurso = infoCursando::join("cursos", "cursos.id", "=", "info_cursando.id_Cursos")
+             ->join("estudiantes", "estudiantes.id", "=", "info_cursando.id_Estudiante")
+             ->where("info_cursando.id_Cursos", "=", $request->id_Cursos)
+             ->select("*")
+             ->get();
+          /*  $infoCurso= infoCursando::join("estudiantes", "estudiantes.id", "=", "info_cursando.id_Estudiante")
+            ->select("*")
+            ->where("estudiantes.id", "=", auth()->user()->id)
+            ->get();*/
            if($infoCurso->isEmpty()) {
            
 

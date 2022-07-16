@@ -24,6 +24,7 @@ class Cursos extends Model
     public function estudiantes() {
         return $this->hasMany(estudiantes::class);
     }
+    /*Tiene muchos estudiantes*/
     
     public function profesor() {
         return $this->belongsTo(profesor::class);

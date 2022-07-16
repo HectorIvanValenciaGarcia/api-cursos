@@ -21,7 +21,7 @@ class EstudianteController extends Controller
                 'Dir_img' => 'required',
                 'email' => 'required|email|unique:Estudiantes',
                 'password' => 'required|confirmed',
-
+//cambios por etapas
             ]);
 
                 $estudiante = new estudiantes();

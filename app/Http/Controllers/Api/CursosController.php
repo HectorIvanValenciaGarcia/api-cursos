@@ -57,8 +57,10 @@ class CursosController extends Controller
 
      public function verCursos(){
 
-        
-            $cursos = Cursos::all();
+        $cursos= Cursos::join("profesor", "profesor.id", "=", "cursos.id_Profesor")
+            ->select("*")
+            ->get();
+            
     
             if(empty($cursos)) {
                 return response()->json([

@@ -1,9 +1,17 @@
 <?php
 
+use App\Http\Controllers\Api\ContenidoLecionesController;
 use App\Http\Controllers\Api\CursosController;
+use App\Http\Controllers\Api\ejeciciosController;
 use App\Http\Controllers\Api\EstudianteController;
 use App\Http\Controllers\Api\InfoCursosController;
+use App\Http\Controllers\Api\LeccionesController;
 use App\Http\Controllers\Api\ProfesorController;
+
+
+
+
+
 
 
 use Illuminate\Http\Request;
@@ -48,6 +56,24 @@ Route::group(['middleware' => ["auth:sanctum"]], function()
         Route::get('verCursos',[CursosController::class, 'verCursos']);
     });
     //routes list
+    Route::group(['prefix' => 'Lecciones'], function() {
+        Route::post('crear-lecciones',[LeccionesController::class, 'crearLeccion']);
+        Route::post('ver-lecciones',[LeccionesController::class, 'verLecciones']);
+        Route::post('abrir-Leccion',[LeccionesController::class, 'abrirLeccion']);
+       
+    });
+
+    Route::group(['prefix' => 'contenido-lecciones'], function() {
+        Route::post('crear-contenido',[ContenidoLecionesController::class, 'crearContenido']);
+        Route::post('ver-contenido',[ContenidoLecionesController::class, 'verContenido']);
+    });
+
+    Route::group(['prefix' => 'preguntas'], function() {
+        Route::post('crear-preguntas',[ejeciciosController::class, 'crearPreguntas']);
+        Route::post('ver-contenido',[ejeciciosController::class, 'verContenido']);
+    });
+
+
 });
 
 
