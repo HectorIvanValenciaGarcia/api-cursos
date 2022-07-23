@@ -70,7 +70,9 @@ Route::group(['middleware' => ["auth:sanctum"]], function()
 
     Route::group(['prefix' => 'preguntas'], function() {
         Route::post('crear-preguntas',[ejeciciosController::class, 'crearPreguntas']);
-        Route::post('ver-contenido',[ejeciciosController::class, 'verContenido']);
+        Route::post('ver-preguntas',[ejeciciosController::class, 'verPreguntas']);
+        Route::post('validar-preguntas',[ejeciciosController::class, 'validarRespuesta']);
+
     });
 
 

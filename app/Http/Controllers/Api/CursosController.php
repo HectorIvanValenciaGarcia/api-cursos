@@ -58,14 +58,14 @@ class CursosController extends Controller
      public function verCursos(){
 
         $cursos= Cursos::join("profesor", "profesor.id", "=", "cursos.id_Profesor")
-            ->select("*")
+        ->select("*","cursos.id as id_curso")
             ->get();
             
     
             if(empty($cursos)) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'No se tienen noticias registradas',
+                    'message' => 'No se tienen cursos registradas',
                 ]);
             } else {
                 try {

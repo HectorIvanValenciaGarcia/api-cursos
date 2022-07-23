@@ -54,9 +54,26 @@ public function crearPreguntas(Request $request){
  
 public function verPreguntas(Request $request)
 {
-    $preguntas= ejercicios::where('id_Curso',$request->id_Curso) ->get();
-   
+    $request->validate(
+        [
+           
+            'id_Contenido'=> 'required']);
+    $preguntas= ejercicios::where('id_Contenido',$request->id_Contenido)->get();
+    return response()->json(
+        [
+            "status" => true,
+            "msg" =>"aqui esta el problema",
+            "data"=> $preguntas
+        ]
+    );
 }
 
+
+public function validarRespuesta(Request $request){
+
+
+
+
+}
 
 }
