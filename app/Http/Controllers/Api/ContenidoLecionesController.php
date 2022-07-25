@@ -45,14 +45,25 @@ class ContenidoLecionesController extends Controller
             ]);
 
             $leccion= contenidoLecciones::where('id_Leccion',$request->id_Leccion) ->get();
+            if($leccion->isEmpty()){
             return response()->json(
                 [
-                    "status" => true,
-                    "msg" =>"el contenido de la leccion fue creado con exito!",
+                    "status" => false,
+                    "msg" =>" no hay contenido en la leccion!",
                     'data' =>$leccion
 
                 ]
-            );
+            );}else{
+                return response()->json(
+                    [
+                        "status" => true,
+                        "msg" =>"el contenido de la leccion fue consultado con exito!",
+                        'data' =>$leccion
+    
+                    ]
+                ); 
+                
+            }
 
 
     }
