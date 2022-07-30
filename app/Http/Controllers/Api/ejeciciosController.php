@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ejercicios;
+use App\Models\calificacion;
 use Illuminate\Http\Request;
+
 
 class ejeciciosController extends Controller
 {
@@ -70,9 +72,67 @@ public function verPreguntas(Request $request)
 
 
 public function validarRespuesta(Request $request){
+    $request->validate(
+        [
+            'num_pregunta'=>'required',
+            'id_Contenido'=>'required',
+            'id_Leccion'=>'required',
+            'id_Ejercicio'=>'required',
+            'respuesta'=>'required',
+        ]);
 
+        $preguntas= ejercicios::where('id',$request->id_Ejercicio)->get();
+        
 
-
+        if($preguntas[0]["respuesta"]==$request->respuesta)
+        {
+            $calificacion=calificacion::where('id_Estudiante',auth()->user()->id)
+                ->where('id_Leccion',$request->id_Leccion)
+                ->get();
+               
+         
+            if($calificacion->isEmpty()){
+            $calificacion= new calificacion();
+            $calificacion->id_Estudiante = auth()->user()->id;
+           
+            $calificacion->id_Leccion = $request->id_Leccion;
+            $calificacion->calificaciones= (1.00/5.00)*100;
+            $calificacion-> save();
+            return response()->json(
+                [
+                    "status" => true,
+                    "data" =>$preguntas[0]["respuesta"],
+                    "msg"=> "la respuesta es correcta"
+                ]
+            );
+          
+              }else{
+                $calificacion=calificacion::where('id_Estudiante',auth()->user()->id)
+                ->where('id_Leccion',$request->id_Leccion)
+                ->first();
+$calificacion->calificaciones=($request->num_pregunta/5)*100;
+$calificacion->update();
+                return response()->json(
+                    [
+                        "status" => true,
+                        "msg" =>"se actualizo el progreso",
+                        "data"=> $preguntas[0]["respuesta"]
+                    ]
+                );
+              
+                
+              }
+    
+        }else{
+            return response()->json(
+                [
+                    "status" => $preguntas,
+                    "msg" =>"no es correcto",
+                    "data"=> "xd"
+                ]
+            );
+        }
+      
 
 }
 

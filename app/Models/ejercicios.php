@@ -25,3 +25,4 @@ class ejercicios extends Model
     }
 
 }
+
