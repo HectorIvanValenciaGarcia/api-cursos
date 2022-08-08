@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cursos;
+use App\Models\lecciones;
 
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
@@ -85,6 +86,26 @@ class CursosController extends Controller
             }
     
         }
+
+
+public function caliCurso(){
+
+    /*union entre tabla leccion y calificacion*/
+    $cursos= lecciones::join("calificaciones", "calificaciones.id_Leccion", "=", "lecciones.id")
+    ->select("*")
+        ->get();
+
+        return response()->json([
+            'status' => false,
+            'message' => $cursos
+        ]);
+
+
+
+
+}
+
+
 
      }
 

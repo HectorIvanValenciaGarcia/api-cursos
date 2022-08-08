@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\infoCursando;
+use App\Models\Cursos;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\testmail;
 
 class InfoCursosController extends Controller
 {
@@ -26,10 +28,20 @@ class InfoCursosController extends Controller
             $info->id_Cursos = $request->id_Cursos;
             $info->puntuacion = $request->puntuacion;
             $info->save();
+             
+            $curso= Cursos::where('id',$request->id_Cursos) ->get();
+
+            $details =[
+                'title'=>"Registro correcto al curso " . $curso[0]["Nom_Curso"],
+                'body'=>"te registraste con exito al " . $curso[0]["Nom_Curso"],
+                'descripcion'=>"Donde aprenderas a " .  $curso[0]["Descripcion"]
+
+            ];
+            Mail::to(auth()->user()->email)->send(new testmail($details));
             return response()->json(
                 [
                     "status" => true,
-                    "msg" => "Registro de curso exitoso!"
+                    "msg" =>"usuario registrado correctamente",
                 ]
             );
         } catch (\Throwable $th) {
