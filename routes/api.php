@@ -54,7 +54,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function()
         Route::get('verRegistros',[InfoCursosController::class, 'verRegistros']);
         Route::post('estudiantesCursos',[InfoCursosController::class, 'estudiantesCursos']);
         Route::get('verCursos',[CursosController::class, 'verCursos']);
-        Route::get('calificacion-curso',[CursosController::class, 'caliCurso']);
+        Route::post('calificacion-curso',[CursosController::class, 'caliCurso']);
     });
     //routes list
     Route::group(['prefix' => 'Lecciones'], function() {

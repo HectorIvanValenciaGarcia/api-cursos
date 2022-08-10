@@ -73,7 +73,8 @@ public function verPreguntas(Request $request)
 
 public function validarRespuesta(Request $request){
     $request->validate(
-        [
+        [   
+            'id_Curso'=>'required',
             'num_pregunta'=>'required',
             'id_Contenido'=>'required',
             'id_Leccion'=>'required',
@@ -93,6 +94,7 @@ public function validarRespuesta(Request $request){
          
             if($calificacion->isEmpty()){
             $calificacion= new calificacion();
+            $calificacion->id_Curso = $request->id_Curso;
             $calificacion->id_Estudiante = auth()->user()->id;
            
             $calificacion->id_Leccion = $request->id_Leccion;

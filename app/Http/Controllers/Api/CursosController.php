@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cursos;
+use App\Models\calificacion;
 use App\Models\lecciones;
-
+use App\Models\infoCursando;
+use App\Models\estudiantes;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -88,19 +90,32 @@ class CursosController extends Controller
         }
 
 
-public function caliCurso(){
+public function caliCurso(Request $request){
+
+    $request->validate(
+        [
+           
+            'id_Curso' => 'required',
+            'id_Estudiante' => 'required',
+            
+        ]
+    );
 
     /*union entre tabla leccion y calificacion*/
-    $cursos= lecciones::join("calificaciones", "calificaciones.id_Leccion", "=", "lecciones.id")
-    ->select("*")
-        ->get();
+    $cantLecciones= calificacion::where("id_curso",$request->id_Curso)->
+    where("id_Estudiante",$request->id_Estudiante)->count("calificaciones");
+    
+    $suma= calificacion::where("id_curso",$request->id_Curso)->
+    where("id_Estudiante",$request->id_Estudiante)->sum("calificaciones");
+    
+    
+    $promedio = $suma/$cantLecciones;
+
 
         return response()->json([
             'status' => false,
-            'message' => $cursos
+            'message' => $promedio
         ]);
-
-
 
 
 }

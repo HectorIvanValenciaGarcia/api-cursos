@@ -12,6 +12,7 @@ class calificacion extends Model
     protected $table ="calificaciones";
     protected $fillable =
     [
+        'id_Curso',
         'id_Estudiante',
       
         'id_Leccion'    ,
@@ -23,6 +24,9 @@ class calificacion extends Model
     }
     public function leccion() {
         return $this->belongsTo(lecciones::class);
+    }
+    public function curso() {
+        return $this->belongsTo(Cursos::class);
     }
 
 
