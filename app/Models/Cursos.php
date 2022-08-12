@@ -16,6 +16,7 @@ class Cursos extends Model
         'Nom_Curso',
         'Descripcion',
         'Img_Curso',
+        "cant_alumnos",
         'Color',
         
     ];

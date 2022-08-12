@@ -36,6 +36,9 @@ Route::post('login',[EstudianteController::class, 'login']);
 Route::post('registerProfesor',[ProfesorController::class, 'register']);
 Route::post('loginProfesor',[ProfesorController::class, 'login']);
 
+
+
+
 Route::group(['middleware' => ["auth:sanctum"]], function()
 {
     Route::group(['prefix' => 'Estudiantes'], function() {
@@ -55,6 +58,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function()
         Route::post('estudiantesCursos',[InfoCursosController::class, 'estudiantesCursos']);
         Route::get('verCursos',[CursosController::class, 'verCursos']);
         Route::post('calificacion-curso',[CursosController::class, 'caliCurso']);
+        Route::get('verCursosFrecuentes',[InfoCursosController::class, 'cursosFrecuentes']);
     });
     //routes list
     Route::group(['prefix' => 'Lecciones'], function() {

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('Descripcion');
             $table->string('Img_Curso');
             $table->string('Color');
+            $table->integer('cant_alumnos');
             $table->foreign('id_Profesor')->references('id')->on('profesor');
             $table->timestamps();
           /*  $table->timestamps();*/

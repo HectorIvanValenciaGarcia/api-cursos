@@ -99,7 +99,7 @@ public function validarRespuesta(Request $request){
            
             $calificacion->id_Leccion = $request->id_Leccion;
             $calificacion->calificaciones= (1.00/5.00)*100;
-            $calificacion-> save();
+            $calificacion->save();
             return response()->json(
                 [
                     "status" => true,

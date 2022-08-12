@@ -29,8 +29,12 @@ class InfoCursosController extends Controller
             $info->puntuacion = $request->puntuacion;
             $info->save();
              
-            $curso= Cursos::where('id',$request->id_Cursos) ->get();
+            $xd= Cursos::where('id',$request->id_Cursos)->first();
+            $xd->cant_alumnos=$xd->cant_alumnos+1;
+            $xd->update();
 
+            $curso= Cursos::where('id',$request->id_Cursos)->get();
+           
             $details =[
                 'title'=>"Registro correcto al curso " . $curso[0]["Nom_Curso"],
                 'body'=>"te registraste con exito al " . $curso[0]["Nom_Curso"],
@@ -38,10 +42,13 @@ class InfoCursosController extends Controller
 
             ];
             Mail::to(auth()->user()->email)->send(new testmail($details));
+
+
+          
             return response()->json(
                 [
                     "status" => true,
-                    "msg" =>"usuario registrado correctamente",
+                    "msg" =>"usuario registrado correctamente".$xd,
                 ]
             );
         } catch (\Throwable $th) {
@@ -156,5 +163,20 @@ class InfoCursosController extends Controller
                 ]
             );
         }
+    }
+
+
+    public function cursosFrecuentes(){
+        
+        
+       $sql2= Cursos::SELECT('*')->
+       MAX('cant_alumnos')->get();
+        return response()->json(
+            [
+                "status" => false,
+                "msg" => "Error al consultar registros!",
+                "error" => $sql2
+            ]
+        );
     }
 }
